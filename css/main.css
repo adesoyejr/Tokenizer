@@ -1,0 +1,101 @@
+body{
+    background-color:white;
+    background-image: url('../img/map-image.png');
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-position: fill;
+}
+.center-paragraph{
+    text-align: center;
+}
+.topHeader{
+    background-color:white;
+    color:white;
+    text-transform: uppercase;
+}
+.dp{
+	width: 150px;
+	height: 150px;
+}
+.android{
+	background: transparent;
+	border-bottom: 1px solid white;
+	border-top: 0px;
+	border-right: 0px;
+	border-left: 0px;
+}
+.android-black{
+	background: transparent;
+	border-bottom: 1px solid white;
+	border-top: 0px;
+	border-right: 0px;
+	border-left: 0px;
+}
+.round{
+	border-radius: 100%;
+}
+.small-transparent{
+	opacity: 0.7;
+}
+.no-decoration{
+	display: block;
+	background-color: burlywood;
+	padding: 10px;
+	width: 100%;
+	border-radius: 10px;
+	margin: auto;
+}
+.green{
+	color:green;
+}
+.profile-key{
+	background-color: rgb(99, 121, 168);
+	color: burlywood;
+	padding: 15px;
+	font-family: helvetica;
+	text-transform: capitalize;
+	text-decoration: bold;
+	text-align: right;
+	margin-bottom: 1px;
+}
+.profile-value{
+	background-color: burlywood;
+	color: darkred;
+	padding: 15px;
+	font-family: helvetica;
+	text-transform: capitalize;
+	text-decoration: bold;
+	margin-bottom: 1px;
+	text-align: left;
+}
+.green-dot{
+	height: 10px;
+	width: 10px;
+	background-color: darkgreen;
+	border-radius: 50%;
+	display: inline-block;
+}
+.red-dot{
+	height: 10px;
+	width: 10px;
+	background-color: darkred;
+	border-radius: 50%;
+	display: inline-block;
+}
+.darkgreen{
+	color: darkgreen;
+}
+.search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background: #ccc;
+}

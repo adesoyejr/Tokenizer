@@ -1,0 +1,23 @@
+#meter_wrapper
+{
+ border:1px solid grey;
+ margin-left:1%;
+ margin-top:20px;
+ width:200px;
+ height:8px;
+ border-radius:3px;
+}
+#meter
+{
+ width:0px;
+ height:7px;
+ border-radius: 1px;
+}
+#pass_type
+{
+ font-size:12px;
+ margin-top:20px;
+ margin-left:1%;
+ text-align:center;
+ color:grey;
+}

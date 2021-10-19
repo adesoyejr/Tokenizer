@@ -1,0 +1,18 @@
+{
+    "name": "timilehin.adesoye/rand",
+    "autoload": {
+        "psr-4": {
+            "TimilehinAdesoye\\Rand\\": "/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Timi Adesoye",
+            "email": "adesoyejr@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.3",
+        "phpfastcache/phpfastcache": "^8.0"
+    }
+}
