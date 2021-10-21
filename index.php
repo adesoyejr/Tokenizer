@@ -6,6 +6,7 @@ if(!isset($_SESSION['username'])){
     header('location:login.php');
 }
 require_once('connection.php');
+require_once('controller.php');
 $username=$_SESSION['username'];
 $type = $_SESSION['type'];
 ?>
@@ -83,13 +84,15 @@ $result = mysqli_query($conn, $sql);
   </tr>
 <?php
 while ($data = mysqli_fetch_array($result)){
+  $realbvn = new tokenize();
+  $bvnnum = $realbvn->deToken($data['AccountNumber'], $data['BVNNumber']);
 ?>
 
   <tr>
     <td><a href="detss.php?AccountNumber=<?php echo $data['AccountNumber']; ?>"><?php echo $data['FirstName']; ?></td>
     <td><?php echo $data['LastName']; ?></td>
     <td><?php echo $data['AccountNumber']; ?></td>
-    <td><?php if ($type){echo $data['BVNNumber'];}else{echo "**********";} ?></td>
+    <td><?php if ($type){echo $bvnnum;}else{echo "**********";} ?></td>
     <td><?php echo $data['EmailAddress']; ?></td>
     <td><?php echo $data['BankBranch']; ?></td>
     <td><?php echo $data['HomeAddress']; ?></td>
