@@ -146,9 +146,11 @@
         public function create($FirstName, $LastName, $AccountNumber, $BVNNumber, $EmailAddress, $BankBranch, $HomeAddress, $TelephoneNumber, $AccountType, $Balance, $logon, $CreditCard, $imgContent){
 
             $fortoken = new tokenize();
-            $thisToken = $fortoken->getToken($AccountNumber, $BVNNumber); 
+            $BVNToken = $fortoken->getToken($AccountNumber, $BVNNumber);
+            $CreditToken = $fortoken->getToken($AccountNumber, $CreditCard);
+            $BalanceToken = $fortoken->getToken($AccountNumber, $Balance);
 
-            $sql = "INSERT INTO `staffdata` (`FirstName`, `LastName`, `AccountNumber`, `BVNNumber`, `EmailAddress`, `BankBranch`, `HomeAddress`, `TelephoneNumber`, `AccountType`, `Balance`, `logon`, `CreditCard`, `dp`) VALUES ('$FirstName', '$LastName', '$AccountNumber', '$thisToken', '$EmailAddress', '$BankBranch', '$HomeAddress', '$TelephoneNumber', '$AccountType', '$Balance', '$logon', '$CreditCard', '$imgContent')";
+            $sql = "INSERT INTO `staffdata` (`FirstName`, `LastName`, `AccountNumber`, `BVNNumber`, `EmailAddress`, `BankBranch`, `HomeAddress`, `TelephoneNumber`, `AccountType`, `Balance`, `logon`, `CreditCard`, `dp`) VALUES ('$FirstName', '$LastName', '$AccountNumber', '$BVNToken', '$EmailAddress', '$BankBranch', '$HomeAddress', '$TelephoneNumber', '$AccountType', '$BalanceToken', '$logon', '$CreditToken', '$imgContent')";
     
             $result = mysqli_query($this->connection, $sql);
 

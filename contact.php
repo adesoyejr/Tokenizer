@@ -153,8 +153,10 @@ if(isset($_POST["submit"])){
               </div>
           
               <div class="col-sm-12"> 
-                <label style="color:black" class="radio-inline"><input required type="radio" name="type" value="0">Normal user</label>
-                <label style="color:black" class="radio-inline"><input required type="radio" name="type" value="1">Elevated user</label>
+                <label style="color:black" class="radio-inline"><input required type="radio" name="type" value="1">Finance Department User</label>
+                <label style="color:black" class="radio-inline"><input required type="radio" name="type" value="2">Call Center Agent</label>
+                <label style="color:black" class="radio-inline"><input required type="radio" name="type" value="3">E-Settlement</label>
+                <label style="color:black" class="radio-inline"><input required type="radio" name="type" value="4">Other User</label>
                 </div>
                 <br><br>
               </div>

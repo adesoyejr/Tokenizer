@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 session_start();
 // to get details of the session => print_r($_SESSION);
 if(!isset($_SESSION['username'])){
@@ -32,8 +35,8 @@ $type = $_SESSION['type'];
   <br>
   <center class="animated bounceInDown">
   <div class="jumbotron">
-     <img src=".\img\fcmb.png" class="w3-round" alt="FCMB" width="50" height="50" style="float:right"> 
-     <img src=".\img\lumenave.png" class="w3-round" alt="Lumenave" width="100" height="50" style="float:left">
+     <img src=".\img\fcmb.png" class="w3-round" alt="FCMB" width="90" height="90" style="float:right"> 
+     <img src=".\img\lumenave.png" class="w3-round" alt="Lumenave" width="200" height="70" style="float:left">
     <p>Bank Users' Details</p>
   </div>
   </center>
@@ -84,23 +87,47 @@ $result = mysqli_query($conn, $sql);
   </tr>
 <?php
 while ($data = mysqli_fetch_array($result)){
-  $realbvn = new tokenize();
-  $bvnnum = $realbvn->deToken($data['AccountNumber'], $data['BVNNumber']);
+  $bvnnum = $data['BVNNumber'];
+  $balance = $data['Balance'];
+  $credit = $data['CreditCard'];
+  
+  if ($type == 1){
+    $realValues = new tokenize();
+    $bvnnum = $realValues->deToken($data['AccountNumber'], $data['BVNNumber']);
+    $balance = $realValues->deToken($data['AccountNumber'], $data['Balance']);
+    $credit = $realValues->deToken($data['AccountNumber'], $data['CreditCard']);
+  }
+  if ($type == 2){
+    $realValues = new tokenize();
+    $bvnnum = $realValues->deToken($data['AccountNumber'], $data['BVNNumber']);
+    $balance = $realValues->deToken($data['AccountNumber'], $data['Balance']);
+    $halfCredit = $realValues->deToken($data['AccountNumber'], $data['CreditCard']);
+    $firstSix = substr($halfCredit,0,6);
+    $lastFour = substr($halfCredit,12,4);
+    $middle = substr($data['CreditCard'],6,6);
+    $credit = "$firstSix$middle$lastFour";
+  }
+  if ($type == 3){
+    $realValues = new tokenize();
+    $credit = $realValues->deToken($data['AccountNumber'], $data['CreditCard']);
+  }
+  
+  
 ?>
 
   <tr>
     <td><a href="detss.php?AccountNumber=<?php echo $data['AccountNumber']; ?>"><?php echo $data['FirstName']; ?></td>
     <td><?php echo $data['LastName']; ?></td>
     <td><?php echo $data['AccountNumber']; ?></td>
-    <td><?php if ($type){echo $bvnnum;}else{echo "**********";} ?></td>
+    <td><?php echo $bvnnum ?></td>
     <td><?php echo $data['EmailAddress']; ?></td>
     <td><?php echo $data['BankBranch']; ?></td>
     <td><?php echo $data['HomeAddress']; ?></td>
     <td><?php echo $data['TelephoneNumber']; ?></td>
     <td><?php echo $data['AccountType']; ?></td>
-    <td>NGN<?php echo $data['Balance']; ?></td>
+    <td>NGN<?php echo $balance; ?></td>
     <td><?php echo $data['logon']; ?></td>
-    <td><?php if ($type){echo $data['CreditCard'];}else{echo "**********";} ?></td>
+    <td><?php echo $credit; ?></td>
     <td>
       <?php if ($type){ ?>
         <a href="edit.php?AccountNumber=<?php echo $data['AccountNumber']; ?>">Edit</a> <?php } else{echo "";}?>
