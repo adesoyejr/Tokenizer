@@ -15,7 +15,7 @@
                 'verify' => false
             ]);
         
-            $json = "{\n    \"policyName\": \"apirand\",\n    \"dataList\": {\n        \"dataItem\": [\n            {\n                \"identifier\": \"$AccountNumber\",\n                \"inputData\": \"$BVNNumber\"\n            }\n        ]\n    }\n}";
+            $json = "{\n    \"policyName\": \"apirand2\",\n    \"dataList\": {\n        \"dataItem\": [\n            {\n                \"identifier\": \"$AccountNumber\",\n                \"inputData\": \"$BVNNumber\"\n            }\n        ]\n    }\n}";
             $json1 = json_decode($json);
         
             $response = $client->request('POST', '/DpmTokenManagerCoreEngine/tokenmanagerRestful/doTokenization',
@@ -47,7 +47,7 @@
                 'verify' => false
             ]);
         
-            $json = "{\n    \"policyName\": \"apirand\",\n    \"dataList\": {\n        \"dataItem\": [\n            {\n                \"identifier\": \"$AccountNumber\",\n                \"token\": \"$thisToken\"\n            }\n        ]\n    }\n}";
+            $json = "{\n    \"policyName\": \"apirand2\",\n    \"dataList\": {\n        \"dataItem\": [\n            {\n                \"identifier\": \"$AccountNumber\",\n                \"token\": \"$thisToken\"\n            }\n        ]\n    }\n}";
             $json1 = json_decode($json);
         
             $response = $client->request('POST', '/DpmTokenManagerCoreEngine/tokenmanagerRestful/doDetokenization',
@@ -145,12 +145,12 @@
         
         public function create($FirstName, $LastName, $AccountNumber, $BVNNumber, $EmailAddress, $BankBranch, $HomeAddress, $TelephoneNumber, $AccountType, $Balance, $logon, $CreditCard, $imgContent){
 
-            $fortoken = new tokenize();
-            $BVNToken = $fortoken->getToken($AccountNumber, $BVNNumber);
-            $CreditToken = $fortoken->getToken($AccountNumber, $CreditCard);
-            $BalanceToken = $fortoken->getToken($AccountNumber, $Balance);
+            // $fortoken = new tokenize();
+            // $BVNToken = $fortoken->getToken($AccountNumber, $BVNNumber);
+            // $CreditToken = $fortoken->getToken($AccountNumber, $CreditCard);
+            // $BalanceToken = $fortoken->getToken($AccountNumber, $Balance);
 
-            $sql = "INSERT INTO `staffdata` (`FirstName`, `LastName`, `AccountNumber`, `BVNNumber`, `EmailAddress`, `BankBranch`, `HomeAddress`, `TelephoneNumber`, `AccountType`, `Balance`, `logon`, `CreditCard`, `dp`) VALUES ('$FirstName', '$LastName', '$AccountNumber', '$BVNToken', '$EmailAddress', '$BankBranch', '$HomeAddress', '$TelephoneNumber', '$AccountType', '$BalanceToken', '$logon', '$CreditToken', '$imgContent')";
+            $sql = "INSERT INTO `staffdata` (`FirstName`, `LastName`, `AccountNumber`, `BVNNumber`, `EmailAddress`, `BankBranch`, `HomeAddress`, `TelephoneNumber`, `AccountType`, `Balance`, `logon`, `CreditCard`, `dp`) VALUES ('$FirstName', '$LastName', '$AccountNumber', '$BVNNumber', '$EmailAddress', '$BankBranch', '$HomeAddress', '$TelephoneNumber', '$AccountType', '$Balance', '$logon', '$CreditCard', '$imgContent')";
     
             $result = mysqli_query($this->connection, $sql);
 

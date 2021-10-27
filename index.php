@@ -46,7 +46,7 @@ $type = $_SESSION['type'];
 
 <div class="container">
   <button class="btn btn-success" float-left onclick="window.location.href='add.php'">Add New User Details</button>
-  <button class="btn btn-info" float-left onclick="window.location.href='iteller.php'">Go to iTeller</button>
+  <!-- <button class="btn btn-info" float-left onclick="window.location.href='iteller.php'">Go to iTeller</button> -->
   <div class="pull-right">
     <button class="btn btn-warning" pull-right onclick="window.location.href='logout.php'">Logout</button>
   </div>
@@ -91,25 +91,24 @@ while ($data = mysqli_fetch_array($result)){
   $balance = $data['Balance'];
   $credit = $data['CreditCard'];
   
-  if ($type == 1){
+  if ($type == 4){
     $realValues = new tokenize();
-    $bvnnum = $realValues->deToken($data['AccountNumber'], $data['BVNNumber']);
-    $balance = $realValues->deToken($data['AccountNumber'], $data['Balance']);
-    $credit = $realValues->deToken($data['AccountNumber'], $data['CreditCard']);
+    $bvnnum = $realValues->getToken($data['AccountNumber'], $data['BVNNumber']);
+    $balance = $realValues->getToken($data['AccountNumber'], $data['Balance']);
+    $credit = $realValues->getToken($data['AccountNumber'], $data['CreditCard']);
   }
   if ($type == 2){
     $realValues = new tokenize();
-    $bvnnum = $realValues->deToken($data['AccountNumber'], $data['BVNNumber']);
-    $balance = $realValues->deToken($data['AccountNumber'], $data['Balance']);
-    $halfCredit = $realValues->deToken($data['AccountNumber'], $data['CreditCard']);
-    $firstSix = substr($halfCredit,0,6);
-    $lastFour = substr($halfCredit,12,4);
-    $middle = substr($data['CreditCard'],6,6);
+    $halfCredit = $realValues->getToken($data['AccountNumber'], $data['CreditCard']);
+    $firstSix = substr($data['CreditCard'],0,6);
+    $lastFour = substr($data['CreditCard'],12,4);
+    $middle = substr($halfCredit,6,6);
     $credit = "$firstSix$middle$lastFour";
   }
   if ($type == 3){
     $realValues = new tokenize();
-    $credit = $realValues->deToken($data['AccountNumber'], $data['CreditCard']);
+    $bvnnum = $realValues->getToken($data['AccountNumber'], $data['BVNNumber']);
+    $balance = $realValues->getToken($data['AccountNumber'], $data['Balance']);
   }
   
   

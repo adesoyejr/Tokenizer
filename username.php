@@ -23,8 +23,8 @@ $answer=$_SESSION['answer'];
 <div class="container">
   <center class="animated bounceInDown">
   <div class="jumbotron">
-    <img src=".\img\fcmb.png" class="w3-round" alt="FCMB" width="50" height="50" style="float:right"> 
-    <img src=".\img\lumenave.png" class="w3-round" alt="Lumenave" width="100" height="50" style="float:left">
+    <img src=".\img\fcmb.png" class="w3-round" alt="FCMB" width="90" height="90" style="float:right"> 
+    <img src=".\img\lumenave.png" class="w3-round" alt="Lumenave" width="200" height="70" style="float:left">
     <p><?php echo $username; ?> Password Reset</p>
   </div>
   </center>

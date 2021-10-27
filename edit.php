@@ -1,8 +1,10 @@
 <?php
 
 require_once('connection.php');
+require_once 'controller.php';
 session_start();
 $username=$_SESSION['username'];
+$type = $_SESSION['type'];
 
 $AccountNumber = $_GET['AccountNumber'];
 
@@ -11,6 +13,30 @@ $query = "select * from staffdata where AccountNumber = '$AccountNumber'";
 $res = mysqli_query($conn, $query);
 
 $data = mysqli_fetch_array($res);
+
+$bvnnum = $data['BVNNumber'];
+$balance = $data['Balance'];
+$credit = $data['CreditCard'];
+
+if ($type == 4){
+$realValues = new tokenize();
+$bvnnum = $realValues->getToken($data['AccountNumber'], $data['BVNNumber']);
+$balance = $realValues->getToken($data['AccountNumber'], $data['Balance']);
+$credit = $realValues->getToken($data['AccountNumber'], $data['CreditCard']);
+}
+if ($type == 2){
+$realValues = new tokenize();
+$halfCredit = $realValues->getToken($data['AccountNumber'], $data['CreditCard']);
+$firstSix = substr($data['CreditCard'],0,6);
+$lastFour = substr($data['CreditCard'],12,4);
+$middle = substr($halfCredit,6,6);
+$credit = "$firstSix$middle$lastFour";
+}
+if ($type == 3){
+$realValues = new tokenize();
+$bvnnum = $realValues->getToken($data['AccountNumber'], $data['BVNNumber']);
+$balance = $realValues->getToken($data['AccountNumber'], $data['Balance']);
+}
 
 if(isset($_POST['update'])) 
 {
@@ -59,8 +85,8 @@ if(isset($_POST['update']))
 <div class="container">
   <center class="animated bounceInDown">
   <div class="jumbotron">
-  <img src=".\img\fcmb.png" class="w3-round" alt="FCMB" width="50" height="50" style="float:right"> 
-     <img src=".\img\lumenave.png" class="w3-round" alt="Lumenave" width="100" height="50" style="float:left">
+    <img src=".\img\fcmb.png" class="w3-round" alt="FCMB" width="90" height="90" style="float:right"> 
+    <img src=".\img\lumenave.png" class="w3-round" alt="Lumenave" width="200" height="70" style="float:left">
     <p>Update  Details</p>
   </div>
   </center>
@@ -99,7 +125,7 @@ if(isset($_POST['update']))
         <div class="form-group">
             <div class="col-sm-5">
             <label>Bank Verification Number</label> 
-            <input required style="color:black" value="<?php echo $data['BVNNumber'] ?>" type="number" class="form-control" id="BVNNumber" name="BVNNumber" placeholder="Enter BVN" disabled>
+            <input required style="color:black" value="<?php echo $bvnnum ?>" type="number" class="form-control" id="BVNNumber" name="BVNNumber" placeholder="Enter BVN" disabled>
             </div>
         </div>
         <br>
@@ -144,7 +170,7 @@ if(isset($_POST['update']))
         <div class="form-group">
             <div class="col-sm-5">
             <label>Balance</label> 
-            <input required style="color:black" value="<?php echo $data['Balance'] ?>" type="text" class="form-control" id="Balance" name="Balance" placeholder="Enter Account Balance">
+            <input required style="color:black" value="<?php echo $balance ?>" type="text" class="form-control" id="Balance" name="Balance" placeholder="Enter Account Balance" disabled>
             </div>
         </div>
         
@@ -162,7 +188,7 @@ if(isset($_POST['update']))
         <div class="form-group">
             <div class="col-sm-5">
             <label>Credit Card</label> 
-            <input required style="color:black" value="<?php echo $data['CreditCard'] ?>" type="text" class="form-control" id="CreditCard" name="CreditCard" placeholder="Enter Credit  Card" maxlength="16">
+            <input required style="color:black" value="<?php echo $credit ?>" type="text" class="form-control" id="CreditCard" name="CreditCard" placeholder="Enter Credit  Card" maxlength="16" disabled>
             </div>
         </div>
         <br>

@@ -1,5 +1,6 @@
 <?php
-require_once('connection.php');
+require_once 'connection.php';
+require_once 'controller.php';
 session_start();
 $username=$_SESSION['username'];
 $type = $_SESSION['type'];
@@ -26,9 +27,29 @@ if (!empty($AccountNumber)){
     $sql = "SELECT * FROM `staffdata` WHERE `AccountNumber` = '$AccountNumber'"; 
     $rasberry = mysqli_query($conn, $sql);} 
     $data = mysqli_fetch_array($rasberry);
-    //var_dump($data);
-    //exit();
-    //print_r($data);
+    $bvnnum = $data['BVNNumber'];
+    $balance = $data['Balance'];
+    $credit = $data['CreditCard'];
+    
+    if ($type == 4){
+        $realValues = new tokenize();
+        $bvnnum = $realValues->getToken($data['AccountNumber'], $data['BVNNumber']);
+        $balance = $realValues->getToken($data['AccountNumber'], $data['Balance']);
+        $credit = $realValues->getToken($data['AccountNumber'], $data['CreditCard']);
+    }
+    if ($type == 2){
+        $realValues = new tokenize();
+        $halfCredit = $realValues->getToken($data['AccountNumber'], $data['CreditCard']);
+        $firstSix = substr($data['CreditCard'],0,6);
+        $lastFour = substr($data['CreditCard'],12,4);
+        $middle = substr($halfCredit,6,6);
+        $credit = "$firstSix$middle$lastFour";
+    }
+    if ($type == 3){
+        $realValues = new tokenize();
+        $bvnnum = $realValues->getToken($data['AccountNumber'], $data['BVNNumber']);
+        $balance = $realValues->getToken($data['AccountNumber'], $data['Balance']);
+    }
     if ($data == false){
         header( "refresh:5;url=index.php" );?>
         <div class="container">
@@ -47,8 +68,8 @@ if (!empty($AccountNumber)){
 <div class="container">
   <center class="animated bounceInDown">
   <div class="jumbotron">
-    <img src=".\img\fcmb.png" class="w3-round" alt="FCMB" width="50" height="50" style="float:right"> 
-    <img src=".\img\lumenave.png" class="w3-round" alt="Lumenave" width="100" height="50" style="float:left">
+    <img src=".\img\fcmb.png" class="w3-round" alt="FCMB" width="90" height="90" style="float:right"> 
+    <img src=".\img\lumenave.png" class="w3-round" alt="Lumenave" width="200" height="70" style="float:left">
     <p><?php echo $data['FirstName']." " .$data['LastName'] ;?></p>
   </div>
   </center>
@@ -89,7 +110,7 @@ if (!empty($AccountNumber)){
             <br>
             <div class="row">
                 <div class="col-lg-4 profile-key animated flash">Bank Verification Number</div>
-                <div class="col-lg-8 profile-value animated flash"><?php if ($type){echo $data['BVNNumber'];}else{echo "**********";} ?></div>
+                <div class="col-lg-8 profile-value animated flash"><?php echo $bvnnum; ?></div>
             </div>
             <br>
             <div class="row">
@@ -114,7 +135,7 @@ if (!empty($AccountNumber)){
             <br>
             <div class="row">
                 <div class="col-lg-4 profile-key animated flash">Account Balance</div>
-                <div class="col-lg-8 profile-value animated flash"><?php echo $data['Balance']; ?></div>
+                <div class="col-lg-8 profile-value animated flash"><?php echo $balance; ?></div>
             </div>
             <br>
             <div class="row">
@@ -124,7 +145,7 @@ if (!empty($AccountNumber)){
             <br>
             <div class="row">
                 <div class="col-lg-4 profile-key animated flash">Credit Card Number</div>
-                <div class="col-lg-8 profile-value animated flash"><?php if ($type){echo $data['CreditCard'];}else{echo "**********";} ?></div>
+                <div class="col-lg-8 profile-value animated flash"><?php echo $credit; ?></div>
             </div>
             <br>
             <div class="row">
